@@ -1,5 +1,6 @@
 package com.splitnice.authservice.auth;
 
+import com.splitnice.authservice.eventProducer.UserInfoProducer;
 import lombok.Data;
 import com.splitnice.authservice.repository.UserRepository;
 import com.splitnice.authservice.service.UserDetailsServiceImpl;
@@ -28,10 +29,12 @@ public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
     @Autowired
     private final UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private final UserInfoProducer userInfoProducer;
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository,PasswordEncoder passwordEncoder){
-    return new UserDetailsServiceImpl(userRepository,passwordEncoder);
+    return new UserDetailsServiceImpl(userRepository,passwordEncoder,userInfoProducer);
     }
 
 

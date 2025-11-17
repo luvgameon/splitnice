@@ -1,5 +1,6 @@
 package com.splitnice.authservice.service;
 
+import com.splitnice.authservice.eventProducer.UserInfoProducer;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import com.splitnice.authservice.entities.UserInfo;
@@ -24,6 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserInfoProducer userInfoProducer;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     UserInfo user = userRepository.findByUsername(username);
@@ -46,6 +50,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         String userId = UUID.randomUUID().toString();
         userRepository.save(new UserInfo(userId,userInfoDto.getUsername(),userInfoDto.getPassword(),
                 new HashSet<>()));
+        //pusheventToKafka
+    userInfoProducer.sendMessage(userInfoDto);
         return true;
     }
 }
