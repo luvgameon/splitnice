@@ -15,7 +15,7 @@
     <!-- List of all microservice modules -->
     <modules>
         <module>authservice</module>
-<!--        <module>userservice</module>-->
+        <module>userservice</module>
 <!--        <module>paymentservice</module>-->
         <!-- add more microservices here -->
     </modules>
