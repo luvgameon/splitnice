@@ -1,19 +1,29 @@
 package com.splitnice.authservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.splitnice.authservice.entities.UserInfo;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@NoArgsConstructor
+@JsonNaming (PropertyNamingStrategy.SnakeCaseStrategy.class)
+@Getter
+@Setter
 @AllArgsConstructor
-@Builder
-public class UserInfoDto extends UserInfo {
-    private String userName;
-    private String password;
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserInfoDto extends UserInfo
+{
+
+    @NonNull
+    private String firstName; // first_name
+
+    @NonNull
+    private String lastName; //last_name
+
+
     private Long phoneNumber;
-    private String email;
+
+    private String email; // email
+
 }

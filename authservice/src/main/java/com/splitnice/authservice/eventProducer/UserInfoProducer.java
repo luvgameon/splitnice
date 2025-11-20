@@ -1,5 +1,6 @@
 package com.splitnice.authservice.eventProducer;
 
+import com.splitnice.authservice.entities.UserEvent;
 import com.splitnice.authservice.model.UserInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,16 +12,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserInfoProducer {
-    private final KafkaTemplate<String, UserInfoDto> kafkaTemplate;
+    private final KafkaTemplate<String, UserInfoEvent> kafkaTemplate;
    @Value("${app.kafka.topic}")
    private String TOPIC_NAME;
 
     @Autowired
-    UserInfoProducer(KafkaTemplate<String, UserInfoDto> kafkatemplate) {
+    UserInfoProducer(KafkaTemplate<String, UserInfoEvent> kafkatemplate) {
         this.kafkaTemplate=kafkatemplate;
     }
-    public void sendMessage(UserInfoDto userInfoDto) {
-        Message<UserInfoDto> message = MessageBuilder.withPayload(userInfoDto).setHeader(KafkaHeaders.TOPIC, TOPIC_NAME).build();
+
+    public void sendMessage(UserInfoEvent userInfoDto) {
+        Message<UserInfoEvent> message = MessageBuilder.withPayload(userInfoDto).setHeader(KafkaHeaders.TOPIC, TOPIC_NAME).build();
         kafkaTemplate.send(message);
     }
 

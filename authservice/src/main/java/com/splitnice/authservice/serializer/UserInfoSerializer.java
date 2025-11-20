@@ -1,32 +1,33 @@
 package com.splitnice.authservice.serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.splitnice.authservice.entities.UserEvent;
+import com.splitnice.authservice.eventProducer.UserInfoEvent;
 import com.splitnice.authservice.model.UserInfoDto;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;
 
-public class UserInfoSerializer implements Serializer<UserInfoDto> {
+import java.util.Map;
+
+public class UserInfoSerializer implements Serializer<UserInfoEvent>
+{
     @Override
-    public void configure(Map<String, ?> configs, boolean isKey) {
-        Serializer.super.configure(configs, isKey);
+    public void configure(Map<String, ?> map, boolean b) {
     }
 
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     @Override
-    public byte[] serialize(String topic, UserInfoDto data) {
+    public byte[] serialize(String arg0, UserInfoEvent arg1) {
+        byte[] retVal = null;
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.writeValueAsBytes(data);
+            retVal = objectMapper.writeValueAsString(arg1).getBytes();
         } catch (Exception e) {
-            throw new RuntimeException("Error serializing UserInfoDto", e);
+            e.printStackTrace();
         }
+        return retVal;
     }
-
-    @Override
-    public void close() {
-        Serializer.super.close();
+    @Override public void close() {
     }
 }

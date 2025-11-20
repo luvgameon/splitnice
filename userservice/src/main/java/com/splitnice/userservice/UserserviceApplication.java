@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.kafka.annotation.EnableKafka;
+
 @OpenAPIDefinition(
         info = @Info(
                 title = "User Service API",
@@ -11,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
                 description = "API documentation for managing students"
         )
 )
+@EnableKafka
 @SpringBootApplication
 public class UserserviceApplication {
 
